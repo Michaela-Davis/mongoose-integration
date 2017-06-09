@@ -12,6 +12,10 @@ $(document).ready(function() {
 
     // Add User button click
     $('#btnAddUser').on('click', addUser);
+
+    // Delete User link click
+    // Note the syntax we're using: when working with jQuery's ‘on' method, in order to capture dynamically inserted links, you need to reference a static element on the page first. That's why our selector is the table's tbody element – which remains constant regardless of adding or removing users – and then we're specifying the specific links we're trying to catch in the .on parameters.
+    $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 });
 
 // Functions =============================================================
@@ -124,3 +128,37 @@ function addUser(event) {
         return false;
     }
 };
+
+// Delete User
+function deleteUser(event) {
+
+  event.preventDefault();
+
+  //Pop up confirmation box
+  var confirmation = confirm("Are you sure you want to delete this user?");
+
+  // Check an make sure the user confirmed
+  if (confirmation === true) {
+
+    //if they did, do the delete
+    $.ajax({
+        type: 'DELETE',
+        url: '/users/deleteuser/' + $(this).attr('rel')
+    }).done(function(response) {
+
+      // check for a successful (blank) response
+      if (response.msg === '') {
+      }
+      else {
+          alert('Error:' + response.msg);
+      }
+
+      // update table
+      populateTable();
+    });
+  }
+  else {
+      // if they said no to the confirm then do nothing
+      return false;
+  }
+}
