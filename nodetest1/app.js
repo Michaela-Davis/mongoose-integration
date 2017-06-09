@@ -32,8 +32,10 @@ app.use(function(req,res,next){
     next();
 });
 
-// these tell Express which routes to use
-// app.use('/', index);
+// these tell Express which routes to use 
+// this one is very necessary
+app.use('/', index);
+// this one doesn't appear to be necessary
 // app.use('/users', users);
 
 // catch 404 and forward to error handler

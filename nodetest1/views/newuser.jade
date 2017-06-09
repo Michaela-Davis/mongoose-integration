@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h1= title
+    form#formAddUser(name="adduser",method="post",action="/adduser")
+        input#inputUserName(type="text", placeholder="username", name="username")
+        input#inputUserEmail(type="text", placeholder="useremail", name="useremail")
+        button#btnSubmit(type="submit") submit
+
+        //- Here we're creating a form with the ID "formAddUser" (I like to preface my IDs with the type of thing we're ID'ing. It's a personal quirk). Method is post, action is adduser. Pretty straightforward. Under that we've defined our two inputs and our button.
